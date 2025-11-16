@@ -39,7 +39,7 @@ class StaticMethodMockTest extends TestCase
             $mock->assertExpectationsMet();
             $this->fail('Expected AssertionFailedError was not thrown.');
         } catch (AssertionFailedError $e) {
-            $this->assertEquals('StaticMethodMock not all expectations met for MintyPHP\Mocking\Tests\Math\Adder, 1 remaining', $e->getMessage());
+            $this->assertEquals('Not all expectations met for MintyPHP\Mocking\Tests\Math\Adder, 1 remaining', $e->getMessage());
         }
     }
 
@@ -56,7 +56,7 @@ class StaticMethodMockTest extends TestCase
             Adder::add(1, 2);
             $this->fail('Expected AssertionFailedError was not thrown.');
         } catch (AssertionFailedError $e) {
-            $this->assertEquals('StaticMethodMock no expectations left for MintyPHP\Mocking\Tests\Math\Adder::add', $e->getMessage());
+            $this->assertEquals('No expectations left for MintyPHP\Mocking\Tests\Math\Adder::add', $e->getMessage());
         }
     }
 }
