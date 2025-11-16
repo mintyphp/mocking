@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace MintyPHP\Mocking\Tests;
 
 use MintyPHP\Mocking\StaticMethodMock;
@@ -21,7 +19,7 @@ class StaticMethodMockTest extends \PHPUnit\Framework\TestCase
         // Create a static method mock for the Adder class
         $mock = new StaticMethodMock(Adder::class);
         // Set expectation for the add method
-        $mock->expect('add', [1, 2], false, 3);
+        $mock->expect('add', [1, 2], 3);
         // Call the public static add method
         $result = Adder::add(1, 2);
         // Verify the result

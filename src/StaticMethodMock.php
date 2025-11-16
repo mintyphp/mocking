@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace MintyPHP\Mocking;
 
 class StaticMethodMock
@@ -12,40 +10,52 @@ class StaticMethodMock
     public static array $mocks = [];
     /** @var string */
     private string $className;
-    /** @var array<int,array{method:string,arguments:array,returnsVoid:bool,returns:mixed,exception:?Throwable}> */
+    /** @var array<int,array{method:string,arguments:array<int,mixed>,returns:mixed,exception:?\Throwable}> $expectations*/
     private array $expectations = [];
 
     // Register a static mock for the given class name.
-    public function __construct(string $className) {
+    public function __construct(string $className)
+    {
         $this->className = $className;
         self::$mocks[$className] = $this;
         if (self::$autoloader === null) {
-            self::$autoloader = function (string $class) {
+            self::$autoloader = function (string $class): void {
                 if ($class === $this->className) {
-                    $namespace = substr($this->className, 0, strrpos($this->className, '\\'));
+                    $namespace = substr($this->className, 0, strrpos($this->className, '\\') + 0);
                     $shortClassName = substr($this->className, strrpos($this->className, '\\') + 1);
                     eval('namespace ' . $namespace . ' { class ' . $shortClassName . ' { public static function __callStatic($name, $arguments) { return \MintyPHP\Tests\StaticMethodMock::handleStaticCall(\'' . $this->className . '\', $name, $arguments); } } }');
-                    return true;
                 }
-                return false;
             };
             spl_autoload_register(self::$autoloader, true, true);
         }
     }
 
-    /** Expect a with specific body (exact match). */
-    public function expect(string $method, array $arguments, bool $returnsVoid = true, mixed $returns = null, ?\Throwable $exception = null)
+    /** Expect a with specific body (exact match). 
+     * @param string $method The static method name
+     * @param array<int,mixed> $arguments The arguments to expect
+     * @param mixed $returns The return value if not void
+     * @param ?\Throwable $exception An optional exception to throw
+     */
+
+    public function expect(string $method, array $arguments, mixed $returns = null, ?\Throwable $exception = null): void
     {
         $this->expectations[] = [
             'method' => strtoupper($method),
             'arguments' => $arguments,
-            'returnsVoid' => $returnsVoid,
             'returns' => $returns,
             'exception' => $exception,
         ];
     }
 
-    public static function handleStaticCall(string $className, string $method, array $arguments)
+    /**
+     * Handle a static call to a mocked class.
+     * @param string $className The class name
+     * @param string $method The method name
+     * @param array<int,mixed> $arguments The method arguments
+     * @return mixed The return value
+     * @throws \Exception If no mock is registered or expectations do not match
+     */
+    public static function handleStaticCall(string $className, string $method, array $arguments): mixed
     {
         if (!isset(self::$mocks[$className])) {
             throw new \Exception(sprintf('StaticMethodMock no mock registered for class: %s', $className));
@@ -64,9 +74,6 @@ class StaticMethodMock
         }
         if ($expected['exception'] !== null) {
             throw $expected['exception'];
-        }
-        if ($expected['returnsVoid']) {
-            return;
         }
         return $expected['returns'];
     }
