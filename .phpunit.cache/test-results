@@ -1,1 +1,1 @@
-{"version":2,"defects":{"MintyPHP\\Mocking\\Tests\\StaticMethodMockTest::testStaticMethodMock":8},"times":{"MintyPHP\\Mocking\\Tests\\StaticMethodMockTest::testStaticMethodMock":0}}
+{"version":2,"defects":{"MintyPHP\\Mocking\\Tests\\StaticMethodMockTest::testStaticMethodMock":8},"times":{"MintyPHP\\Mocking\\Tests\\StaticMethodMockTest::testStaticMethodMock":0.001}}
