@@ -74,12 +74,8 @@ class StaticMethodMock
             $mock->testCase->fail(sprintf('StaticMethodMock no expectations left for %s::%s', $className, $method));
         }
         $expected = array_shift($mock->expectations);
-        if ($expected['method'] != strtoupper($method)) {
-            $mock->testCase->assertEquals($expected['method'], strtoupper($method), sprintf('StaticMethodMock method mismatch for %s::%s', $className, $method));
-        }
-        if ($expected['arguments'] != $arguments) {
-            $mock->testCase->assertEquals($expected['arguments'], $arguments, sprintf('StaticMethodMock arguments mismatch for %s::%s', $className, $method));
-        }
+        $mock->testCase->assertEquals($expected['method'], strtoupper($method), sprintf('StaticMethodMock method mismatch for %s::%s', $className, $method));
+        $mock->testCase->assertEquals($expected['arguments'], $arguments, sprintf('StaticMethodMock arguments mismatch for %s::%s', $className, $method));
         if ($expected['exception'] !== null) {
             throw $expected['exception'];
         }
