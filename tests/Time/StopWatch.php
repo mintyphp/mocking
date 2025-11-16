@@ -19,6 +19,8 @@ class StopWatch
     public function stop():float 
     { 
         $endTime = intval(round(microtime(true)*1000));
-        return $endTime - $this->startTime;
+        $timeSpent = $endTime - $this->startTime;
+        throw new \Exception("This method should be mocked!");
+        return $timeSpent;
     }
 }
