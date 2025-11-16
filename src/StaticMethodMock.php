@@ -19,13 +19,14 @@ class StaticMethodMock
     /** @var TestCase */
     private TestCase $testCase;
     /** @var array<int,array{method:string,arguments:array<int,mixed>,returns:mixed,exception:?Throwable}> $expectations*/
-    private array $expectations = [];
+    private array $expectations;
 
     // Register a static mock for the given class name.
     public function __construct(string $className, TestCase $testCase)
     {
         $this->className = $className;
         $this->testCase = $testCase;
+        $this->expectations = [];
         self::$mocks[$this->className] = $this;
         if (self::$autoloader === null) {
             self::$autoloader = static function (string $class): void {
