@@ -1,0 +1,24 @@
+{
+    "name": "mintyphp/mocking",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Maurits van der Schee",
+            "email": "maurits@vdschee.nl",
+            "homepage": "https://www.tqdev.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "phpstan/phpstan": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "MintyPHP\\Mocking\\": "src/",
+            "MintyPHP\\Mocking\\Tests\\": "tests/"
+        }
+    }
+}
