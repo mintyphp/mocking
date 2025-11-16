@@ -23,7 +23,7 @@ class StaticMethodMock
                 if ($class === $this->className) {
                     $namespace = substr($this->className, 0, strrpos($this->className, '\\') + 0);
                     $shortClassName = substr($this->className, strrpos($this->className, '\\') + 1);
-                    eval('namespace ' . $namespace . ' { class ' . $shortClassName . ' { public static function __callStatic($name, $arguments) { return \MintyPHP\Tests\StaticMethodMock::handleStaticCall(\'' . $this->className . '\', $name, $arguments); } } }');
+                    eval('namespace ' . $namespace . ' { class ' . $shortClassName . ' { public static function __callStatic($name, $arguments) { return \MintyPHP\Mocking\StaticMethodMock::handleStaticCall(\'' . $this->className . '\', $name, $arguments); } } }');
                 }
             };
             spl_autoload_register(self::$autoloader, true, true);
