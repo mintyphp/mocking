@@ -4,11 +4,12 @@ namespace MintyPHP\Mocking\Tests;
 
 use MintyPHP\Mocking\StaticMethodMock;
 use MintyPHP\Mocking\Tests\Math\Adder;
+use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;
 
 class StaticMethodMockTest extends TestCase
 {
-    public function testUsingMockedAdder(): void
+    public function testAdderAdd(): void
     {
         // Create a static method mock for the Adder class
         $mock = new StaticMethodMock(Adder::class, $this);
@@ -22,7 +23,7 @@ class StaticMethodMockTest extends TestCase
         $mock->assertExpectationsMet();
     }
 
-    public function testFailingAdder(): void
+    public function testExtraExpectations(): void
     {
         // Create a static method mock for the Adder class
         $mock = new StaticMethodMock(Adder::class, $this);
@@ -33,21 +34,29 @@ class StaticMethodMockTest extends TestCase
         $result = Adder::add(1, 2);
         // Verify the result
         $this->assertEquals(3, $result);
-        // Assert that all expectations were met
-        $mock->assertExpectationsMet();
+        // Assert that all expectations were met (expected to fail)
+        try {
+            $mock->assertExpectationsMet();
+            $this->fail('Expected AssertionFailedError was not thrown.');
+        } catch (AssertionFailedError $e) {
+            $this->assertEquals('StaticMethodMock not all expectations met for MintyPHP\Mocking\Tests\Math\Adder, 1 remaining', $e->getMessage());
+        }
     }
 
-        public function testUsingMockedAdderAgain(): void
+    public function testNotEnoughExpectations(): void
     {
         // Create a static method mock for the Adder class
         $mock = new StaticMethodMock(Adder::class, $this);
         // Set expectation for the add method
         $mock->expect('add', [1, 2], 3);
         // Call the public static add method
-        $result = Adder::add(1, 2);
-        // Verify the result
-        $this->assertEquals(3, $result);
-        // Assert that all expectations were met
-        $mock->assertExpectationsMet();
+        Adder::add(1, 2);
+        try {
+            // Call the public static add method again without expectation
+            Adder::add(1, 2);
+            $this->fail('Expected AssertionFailedError was not thrown.');
+        } catch (AssertionFailedError $e) {
+            $this->assertEquals('StaticMethodMock no expectations left for MintyPHP\Mocking\Tests\Math\Adder::add', $e->getMessage());
+        }
     }
 }
