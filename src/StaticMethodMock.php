@@ -56,6 +56,13 @@ class StaticMethodMock
         ];
     }
 
+    public function assertExpectationsMet(): void
+    {
+        if (!empty($this->expectations)) {
+            $this->testCase->fail(sprintf('StaticMethodMock not all expectations met for %s, %d remaining', $this->className, count($this->expectations)));
+        }
+    }
+
     /**
      * Handle a static call to a mocked class.
      * @param string $className The class name

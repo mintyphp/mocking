@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class StaticMethodMockTest extends TestCase
 {
-    public function testStaticMethodMock(): void
+    public function testUsingMockedAdder(): void
     {
         // Create a static method mock for the Adder class
         $mock = new StaticMethodMock(Adder::class, $this);
@@ -18,5 +18,7 @@ class StaticMethodMockTest extends TestCase
         $result = Adder::add(1, 2);
         // Verify the result
         $this->assertEquals(3, $result);
+        // Assert that all expectations were met
+        $mock->assertExpectationsMet();
     }
 }
