@@ -2,17 +2,17 @@
 
 namespace MintyPHP\Mocking\Tests;
 
-use MintyPHP\Mocking\GlobalFunctionMock;
+use MintyPHP\Mocking\BuiltInFunctionMock;
 use MintyPHP\Mocking\Tests\Time\StopWatch;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;
 
-class GlobalFunctionMockTest extends TestCase
+class BuiltInFunctionMockTest extends TestCase
 {
     public function testStopWatchStartStop(): void
     {
         // Create a static method mock for the Adder class
-        $mock = new GlobalFunctionMock('MintyPHP\Mocking\Tests\Time', $this);
+        $mock = new BuiltInFunctionMock('MintyPHP\Mocking\Tests\Time', $this);
         // Set expectation for the microtime function
         $mock->expect('microtime',[true], 1763333612.602);
         $mock->expect('microtime',[true], 1763333614.825);
@@ -29,7 +29,7 @@ class GlobalFunctionMockTest extends TestCase
     public function testExtraExpectations(): void
     {
         // Create a static method mock for the Adder class
-        $mock = new GlobalFunctionMock('MintyPHP\Mocking\Tests\Time', $this);
+        $mock = new BuiltInFunctionMock('MintyPHP\Mocking\Tests\Time', $this);
         // Set expectation for the microtime function
         $mock->expect('microtime',[true], 1763333612.602);
         $mock->expect('microtime',[true], 1763333614.825);
@@ -50,7 +50,7 @@ class GlobalFunctionMockTest extends TestCase
     public function testNotEnoughExpectations(): void
     {
         // Create a static method mock for the Adder class
-        $mock = new GlobalFunctionMock('MintyPHP\Mocking\Tests\Time', $this);
+        $mock = new BuiltInFunctionMock('MintyPHP\Mocking\Tests\Time', $this);
         // Set expectation for the microtime function
         $mock->expect('microtime',[true], 1763333612.602);
         // Use the StopWatch class which uses the global function

@@ -7,10 +7,10 @@ use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
-class GlobalFunctionMock
+class BuiltInFunctionMock
 {
     // Static properties
-    /** @var array<string,GlobalFunctionMock> */
+    /** @var array<string,BuiltInFunctionMock> */
     public static array $mocks = [];
 
     // Instance properties
@@ -45,7 +45,7 @@ class GlobalFunctionMock
     {
         $namespace = $this->affectedNamespace;
         if (!function_exists("$namespace\\$function")) {
-            eval("namespace $namespace { function $function() { return \\MintyPHP\\Mocking\\GlobalFunctionMock::handleFunctionCall('$namespace','$function',func_get_args()); } }");
+            eval("namespace $namespace { function $function() { return \\MintyPHP\\Mocking\\BuiltInFunctionMock::handleFunctionCall('$namespace','$function',func_get_args()); } }");
         }
         $this->expectations[] = [
             'function' => $function,

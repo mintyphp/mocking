@@ -1,6 +1,6 @@
 # MintyPHP Mocking
 
-Lightweight utilities to mock static methods and global functions in PHP unit tests without invasive refactors.
+Lightweight utilities to mock static methods and built-in functions in PHP unit tests without invasive refactors.
 
 This library works by:
 - Intercepting class autoload for specific classes to provide a stub that forwards static calls to your expectations
@@ -72,17 +72,17 @@ $mock->expect('danger', ['x'], null, new \RuntimeException('boom'));
 // Calling Adder::danger('x') will throw that exception
 ```
 
-## Mocking global functions
+## Mocking built-in functions
 
 Contract:
 - You register a mock for the namespace where the function is called from
 - You declare one or more ordered expectations: function name, exact argument list, optional return value or exception
 - The library defines a function in that namespace (once) that forwards calls to your expectations
 
-Example (taken from `tests/GlobalFunctionMockTest.php`):
+Example (taken from `tests/BuiltInFunctionMockTest.php`):
 
 ```php
-use MintyPHP\Mocking\GlobalFunctionMock;
+use MintyPHP\Mocking\BuiltInFunctionMock;
 use MintyPHP\Mocking\Tests\Time\StopWatch; // Calls microtime() inside its own namespace
 use PHPUnit\Framework\TestCase;
 
@@ -91,7 +91,7 @@ class MyTest extends TestCase
     public function test_stopwatch(): void
     {
         // 1) Register the mock for the namespace where StopWatch lives
-        $mock = new GlobalFunctionMock('MintyPHP\\Mocking\\Tests\\Time', $this);
+        $mock = new BuiltInFunctionMock('MintyPHP\\Mocking\\Tests\\Time', $this);
 
         // 2) microtime(true) will be called twice; set exact expectations
         $mock->expect('microtime', [true], 1763333612.602);
@@ -116,7 +116,7 @@ Notes and caveats:
 Throwing instead of returning:
 
 ```php
-$mock = new GlobalFunctionMock('App\\Service', $this);
+$mock = new BuiltInFunctionMock('App\\Service', $this);
 $mock->expect('file_get_contents', ['https://example.com'], null, new \RuntimeException('network error'));
 ```
 
