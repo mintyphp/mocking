@@ -2,7 +2,10 @@
 
 namespace MintyPHP\Mocking;
 
+use Exception;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 class StaticMethodMock
 {
@@ -14,7 +17,7 @@ class StaticMethodMock
     private string $className;
     /** @var TestCase */
     private TestCase $testCase;
-    /** @var array<int,array{method:string,arguments:array<int,mixed>,returns:mixed,exception:?\Throwable}> $expectations*/
+    /** @var array<int,array{method:string,arguments:array<int,mixed>,returns:mixed,exception:?Throwable}> $expectations*/
     private array $expectations = [];
 
     // Register a static mock for the given class name.
@@ -39,10 +42,10 @@ class StaticMethodMock
      * @param string $method The static method name
      * @param array<int,mixed> $arguments The arguments to expect
      * @param mixed $returns The return value if not void
-     * @param ?\Throwable $exception An optional exception to throw
+     * @param ?Throwable $exception An optional exception to throw
      */
 
-    public function expect(string $method, array $arguments, mixed $returns = null, ?\Throwable $exception = null): void
+    public function expect(string $method, array $arguments, mixed $returns = null, ?Throwable $exception = null): void
     {
         $this->expectations[] = [
             'method' => strtoupper($method),
@@ -58,23 +61,24 @@ class StaticMethodMock
      * @param string $method The method name
      * @param array<int,mixed> $arguments The method arguments
      * @return mixed The return value
-     * @throws \Exception If no mock is registered or expectation fails
+     * @throws Exception If no mock is registered or expectation fails
+     * @throws ExpectationFailedException If expectation fails
      */
     public static function handleStaticCall(string $className, string $method, array $arguments): mixed
     {
         if (!isset(self::$mocks[$className])) {
-            throw new \Exception(sprintf('StaticMethodMock no mock registered for class: %s', $className));
+            throw new Exception(sprintf('StaticMethodMock no mock registered for class: %s', $className));
         }
         $mock = self::$mocks[$className];
         if (empty($mock->expectations)) {
-            $mock->testCase->fail(sprintf('StaticMethodMock unexpected call: %s::%s', $className, $method));
+            $mock->testCase->fail(sprintf('StaticMethodMock no expectations left for %s::%s', $className, $method));
         }
         $expected = array_shift($mock->expectations);
         if ($expected['method'] != strtoupper($method)) {
-            $mock->testCase->fail(sprintf('StaticMethodMock method mismatch: expected %s got %s for %s::%s', $expected['method'], strtoupper($method), $className, $method));
+            $mock->testCase->assertEquals($expected['method'], strtoupper($method), sprintf('StaticMethodMock method mismatch for %s::%s', $className, $method));
         }
         if ($expected['arguments'] != $arguments) {
-            $mock->testCase->fail(sprintf('StaticMethodMock arguments mismatch for %s::%s: expected %s got %s', $className, $method, json_encode($expected['arguments']), json_encode($arguments)));
+            $mock->testCase->assertEquals($expected['arguments'], $arguments, sprintf('StaticMethodMock arguments mismatch for %s::%s', $className, $method));
         }
         if ($expected['exception'] !== null) {
             throw $expected['exception'];

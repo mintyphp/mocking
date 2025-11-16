@@ -20,7 +20,7 @@ class StaticMethodMockTest extends TestCase
         // Create a static method mock for the Adder class
         $mock = new StaticMethodMock(Adder::class, $this);
         // Set expectation for the add method
-        $mock->expect('add', [1, 2], 3);
+        $mock->expect('add', [1, 2, 3], 3);
         // Call the public static add method
         $result = Adder::add(1, 2);
         // Verify the result
