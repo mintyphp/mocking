@@ -65,7 +65,7 @@ class StaticMethodMock
     public function assertExpectationsMet(): void
     {
         if (!empty($this->expectations)) {
-            $this->testCase->fail(sprintf('StaticMethodMock not all expectations met for %s, %d remaining', $this->className, count($this->expectations)));
+            $this->testCase->fail(sprintf('Not all expectations met for %s, %d remaining', $this->className, count($this->expectations)));
         }
     }
 
@@ -81,15 +81,15 @@ class StaticMethodMock
     public static function handleStaticCall(string $className, string $method, array $arguments): mixed
     {
         if (!isset(self::$mocks[$className])) {
-            throw new Exception(sprintf('StaticMethodMock no mock registered for class: %s', $className));
+            throw new Exception(sprintf('No mock registered for class: %s', $className));
         }
         $mock = self::$mocks[$className];
         if (empty($mock->expectations)) {
-            $mock->testCase->fail(sprintf('StaticMethodMock no expectations left for %s::%s', $className, $method));
+            $mock->testCase->fail(sprintf('No expectations left for %s::%s', $className, $method));
         }
         $expected = array_shift($mock->expectations);
-        $mock->testCase->assertEquals($expected['method'], strtoupper($method), sprintf('StaticMethodMock method mismatch for %s::%s', $className, $method));
-        $mock->testCase->assertEquals($expected['arguments'], $arguments, sprintf('StaticMethodMock arguments mismatch for %s::%s', $className, $method));
+        $mock->testCase->assertEquals($expected['method'], strtoupper($method), sprintf('Method mismatch for %s::%s', $className, $method));
+        $mock->testCase->assertEquals($expected['arguments'], $arguments, sprintf('Arguments mismatch for %s::%s', $className, $method));
         if ($expected['exception'] !== null) {
             throw $expected['exception'];
         }
