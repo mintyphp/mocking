@@ -13,6 +13,7 @@ class StaticMethodMock
     private static $autoloader = null;
     /** @var array<string,StaticMethodMock> */
     public static array $mocks = [];
+
     /** @var string */
     private string $className;
     /** @var TestCase */
@@ -25,14 +26,14 @@ class StaticMethodMock
     {
         $this->className = $className;
         $this->testCase = $testCase;
-        self::$mocks[$className] = $this;
+        self::$mocks[$this->className] = $this;
         if (self::$autoloader === null) {
-            self::$autoloader = function (string $class): void {
-                if ($class === $this->className) {
-                    $namespace = substr($this->className, 0, strrpos($this->className, '\\') + 0);
-                    $shortClassName = substr($this->className, strrpos($this->className, '\\') + 1);
-                    eval('namespace ' . $namespace . ' { class ' . $shortClassName . ' { public static function __callStatic($name, $arguments) { return \MintyPHP\Mocking\StaticMethodMock::handleStaticCall(\'' . $this->className . '\', $name, $arguments); } } }');
-                }
+            self::$autoloader = static function (string $class): void {
+                if (in_array($class, array_keys(self::$mocks))) {
+                    $namespace = substr($class, 0, strrpos($class, '\\') + 0);
+                    $shortClassName = substr($class, strrpos($class, '\\') + 1);
+                    eval("namespace $namespace { class $shortClassName { public static function __callStatic(\$name, \$arguments) { return \\MintyPHP\\Mocking\\StaticMethodMock::handleStaticCall('$class', \$name, \$arguments); } } }");
+                }        
             };
             spl_autoload_register(self::$autoloader, true, true);
         }
