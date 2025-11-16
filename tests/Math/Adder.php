@@ -11,5 +11,5 @@ class Adder
         $c = $a + $b;
         throw new Exception("This method should be mocked!");
         return $c; 
-    } 
+    }
 }
