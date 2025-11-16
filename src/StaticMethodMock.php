@@ -9,11 +9,13 @@ use Throwable;
 
 class StaticMethodMock
 {
+    // Static properties
     /** @var ?callable */
     private static $autoloader = null;
     /** @var array<string,StaticMethodMock> */
     public static array $mocks = [];
 
+    // Instance properties
     /** @var string */
     private string $className;
     /** @var TestCase */
@@ -21,7 +23,10 @@ class StaticMethodMock
     /** @var array<int,array{method:string,arguments:array<int,mixed>,returns:mixed,exception:?Throwable}> $expectations*/
     private array $expectations;
 
-    // Register a static mock for the given class name.
+    /** Register a static mock for the given class name.
+     * @param string $className The class name to mock
+     * @param TestCase $testCase The PHPUnit test case
+     */
     public function __construct(string $className, TestCase $testCase)
     {
         $this->className = $className;
@@ -46,7 +51,6 @@ class StaticMethodMock
      * @param mixed $returns The return value if not void
      * @param ?Throwable $exception An optional exception to throw
      */
-
     public function expect(string $method, array $arguments, mixed $returns = null, ?Throwable $exception = null): void
     {
         $this->expectations[] = [
@@ -57,6 +61,7 @@ class StaticMethodMock
         ];
     }
 
+    /** Assert that all expectations were met. */
     public function assertExpectationsMet(): void
     {
         if (!empty($this->expectations)) {
