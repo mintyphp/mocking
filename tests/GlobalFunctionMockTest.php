@@ -3,8 +3,6 @@
 namespace MintyPHP\Mocking\Tests;
 
 use MintyPHP\Mocking\GlobalFunctionMock;
-use MintyPHP\Mocking\StaticMethodMock;
-use MintyPHP\Mocking\Tests\Math\Adder;
 use MintyPHP\Mocking\Tests\Time\StopWatch;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;
