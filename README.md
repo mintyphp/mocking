@@ -133,3 +133,9 @@ From the project root:
 ```bash
 ./vendor/bin/phpunit
 ```
+
+## Alternatives
+
+- [Github.com - php-mock/php-mock](https://www.github.com/php-mock/php-mock)
+- [Github.com - mockery/mockery](https://www.github.com/mockery/mockery)
+- [Github.com - php-mock/php-mock-phpunit](https://www.github.com/php-mock/php-mock-phpunit)
