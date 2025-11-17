@@ -20,7 +20,6 @@ class StopWatch
     { 
         $endTime = intval(round(microtime(true)*1000));
         $timeSpent = $endTime - $this->startTime;
-        throw new \Exception("This method should be mocked!");
         return $timeSpent;
     }
 }
