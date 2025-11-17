@@ -39,7 +39,7 @@ class StaticMethodMock
                     $namespace = substr($class, 0, strrpos($class, '\\') + 0);
                     $shortClassName = substr($class, strrpos($class, '\\') + 1);
                     eval("namespace $namespace { class $shortClassName { public static function __callStatic(\$name, \$arguments) { return \\MintyPHP\\Mocking\\StaticMethodMock::handleStaticCall('$class', \$name, \$arguments); } } }");
-                }        
+                }
             };
             spl_autoload_register(self::$autoloader, true, true);
         }

@@ -14,8 +14,8 @@ class BuiltInFunctionMockTest extends TestCase
         // Create a static method mock for the Adder class
         $mock = new BuiltInFunctionMock('MintyPHP\Mocking\Tests\Time', $this);
         // Set expectation for the microtime function
-        $mock->expect('microtime',[true], 1763333612.602);
-        $mock->expect('microtime',[true], 1763333614.825);
+        $mock->expect('microtime', [true], 1763333612.602);
+        $mock->expect('microtime', [true], 1763333614.825);
         // Use the StopWatch class which uses the built-in function
         $stopWatch = new StopWatch();
         $stopWatch->start();
@@ -31,9 +31,9 @@ class BuiltInFunctionMockTest extends TestCase
         // Create a static method mock for the Adder class
         $mock = new BuiltInFunctionMock('MintyPHP\Mocking\Tests\Time', $this);
         // Set expectation for the microtime function
-        $mock->expect('microtime',[true], 1763333612.602);
-        $mock->expect('microtime',[true], 1763333614.825);
-        $mock->expect('microtime',[true], 1763333616.288);
+        $mock->expect('microtime', [true], 1763333612.602);
+        $mock->expect('microtime', [true], 1763333614.825);
+        $mock->expect('microtime', [true], 1763333616.288);
         // Use the StopWatch class which uses the built-in function
         $stopWatch = new StopWatch();
         $stopWatch->start();
@@ -44,7 +44,7 @@ class BuiltInFunctionMockTest extends TestCase
             $this->fail('Expected AssertionFailedError was not thrown.');
         } catch (AssertionFailedError $e) {
             $this->assertEquals('Not all expectations met for MintyPHP\Mocking\Tests\Time, 1 remaining', $e->getMessage());
-        }   
+        }
     }
 
     public function testNotEnoughExpectations(): void
@@ -52,7 +52,7 @@ class BuiltInFunctionMockTest extends TestCase
         // Create a static method mock for the Adder class
         $mock = new BuiltInFunctionMock('MintyPHP\Mocking\Tests\Time', $this);
         // Set expectation for the microtime function
-        $mock->expect('microtime',[true], 1763333612.602);
+        $mock->expect('microtime', [true], 1763333612.602);
         // Use the StopWatch class which uses the built-in function
         $stopWatch = new StopWatch();
         $stopWatch->start();
