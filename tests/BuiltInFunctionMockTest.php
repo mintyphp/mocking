@@ -67,7 +67,7 @@ class BuiltInFunctionMockTest extends TestCase
 
     public function testImaginaryFunction(): void
     {
-        // Create a static method mock for the Adder class
+        // Create a built-in function mock for the current namespace
         $mock = new BuiltInFunctionMock(__NAMESPACE__, $this);
         // Set expectation for the imaginary built-in function
         $mock->expect('imaginary_builtin_function', [], true);
