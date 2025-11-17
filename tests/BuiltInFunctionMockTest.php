@@ -64,4 +64,26 @@ class BuiltInFunctionMockTest extends TestCase
             $this->assertEquals('No expectations left for microtime', $e->getMessage());
         }
     }
+
+    public function testImaginaryFunction(): void
+    {
+        // Create a static method mock for the Adder class
+        $mock = new BuiltInFunctionMock(__NAMESPACE__, $this);
+        // Set expectation for the imaginary built-in function
+        $mock->expect('imaginary_builtin_function', [], true);
+        // Conditionally define to avoid errors in the IDE
+        if (false) {
+            // IDE thinks this function may be defined here, but it is not
+            function imaginary_builtin_function()
+            {
+                throw new \Exception("This is never executed!");
+            }
+        }
+        // Call the imaginary built-in function (no IDE warnings)
+        $result = imaginary_builtin_function();
+        // Verify the result
+        $this->assertTrue($result);
+        // Assert that all expectations were met
+        $mock->assertExpectationsMet();
+    }
 }
