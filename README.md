@@ -11,7 +11,7 @@ It’s intentionally small, explicit, and easy to reason about. I wrote a [blog 
 ## Requirements
 
 - PHP 7.4+
-- PHPUnit (dev dependency)
+- PHPUnit
 
 ## Installation
 
