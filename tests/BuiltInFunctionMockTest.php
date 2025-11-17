@@ -16,7 +16,7 @@ class BuiltInFunctionMockTest extends TestCase
         // Set expectation for the microtime function
         $mock->expect('microtime', [true], 1763333612.602);
         $mock->expect('microtime', [true], 1763333614.825);
-        // Use the StopWatch class which uses the built-in function
+        // Use the StopWatch class which uses the built-in function microtime
         $stopWatch = new StopWatch();
         $stopWatch->start();
         $result = $stopWatch->stop();
@@ -34,7 +34,7 @@ class BuiltInFunctionMockTest extends TestCase
         $mock->expect('microtime', [true], 1763333612.602);
         $mock->expect('microtime', [true], 1763333614.825);
         $mock->expect('microtime', [true], 1763333616.288);
-        // Use the StopWatch class which uses the built-in function
+        // Use the StopWatch class which uses the built-in function microtime
         $stopWatch = new StopWatch();
         $stopWatch->start();
         $stopWatch->stop();
@@ -53,7 +53,7 @@ class BuiltInFunctionMockTest extends TestCase
         $mock = new BuiltInFunctionMock('MintyPHP\Mocking\Tests\Time', $this);
         // Set expectation for the microtime function
         $mock->expect('microtime', [true], 1763333612.602);
-        // Use the StopWatch class which uses the built-in function
+        // Use the StopWatch class which uses the built-in function microtime
         $stopWatch = new StopWatch();
         $stopWatch->start();
         try {
