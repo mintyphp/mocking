@@ -11,7 +11,7 @@ class BuiltInFunctionMockTest extends TestCase
 {
     public function testStopWatchStartStop(): void
     {
-        // Create a static method mock for the Adder class
+        // Create a built-in function mock for the StopWatch namespace
         $mock = new BuiltInFunctionMock('MintyPHP\Mocking\Tests\Time', $this);
         // Set expectation for the microtime function
         $mock->expect('microtime', [true], 1763333612.602);
@@ -28,7 +28,7 @@ class BuiltInFunctionMockTest extends TestCase
 
     public function testExtraExpectations(): void
     {
-        // Create a static method mock for the Adder class
+        // Create a built-in function mock for the StopWatch namespace
         $mock = new BuiltInFunctionMock('MintyPHP\Mocking\Tests\Time', $this);
         // Set expectation for the microtime function
         $mock->expect('microtime', [true], 1763333612.602);
@@ -49,7 +49,7 @@ class BuiltInFunctionMockTest extends TestCase
 
     public function testNotEnoughExpectations(): void
     {
-        // Create a static method mock for the Adder class
+        // Create a built-in function mock for the StopWatch namespace
         $mock = new BuiltInFunctionMock('MintyPHP\Mocking\Tests\Time', $this);
         // Set expectation for the microtime function
         $mock->expect('microtime', [true], 1763333612.602);
