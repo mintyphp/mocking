@@ -6,7 +6,7 @@ This library works by:
 - Intercepting class autoload for specific classes to provide a stub that forwards static calls to your expectations
 - Defining namespaced functions on the fly so unqualified function calls (like `microtime()`) in that namespace are routed through your mock
 
-It’s intentionally small, explicit, and easy to reason about.
+It’s intentionally small, explicit, and easy to reason about. The [blog](https://www.tqdev.com/2025-mocking-static-methods-built-in-functions-php/) has some background information.
 
 ## Requirements
 
