@@ -59,4 +59,18 @@ class StaticMethodMockTest extends TestCase
             $this->assertEquals('No expectations left for MintyPHP\Mocking\Tests\Math\Adder::add', $e->getMessage());
         }
     }
+
+    public function testImaginaryAdderAdd(): void
+    {
+        // Create a static method mock for the Adder class
+        $mock = new StaticMethodMock('Imaginary\Adder', $this);
+        // Set expectation for the add method
+        $mock->expect('add', [1, 2], 3);
+        // Call the public static add method
+        $result = forward_static_call('Imaginary\Adder::add', 1, 2);
+        // Verify the result
+        $this->assertEquals(3, $result);
+        // Assert that all expectations were met
+        $mock->assertExpectationsMet();
+    }
 }
