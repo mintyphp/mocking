@@ -136,6 +136,8 @@ From the project root:
 
 ## Alternatives
 
+The following libraries are recommended to explore as (better) alternatives:
+
 - [php-mock/php-mock](https://www.github.com/php-mock/php-mock)
 - [mockery/mockery](https://www.github.com/mockery/mockery)
 - [php-mock/php-mock-phpunit](https://www.github.com/php-mock/php-mock-phpunit)
